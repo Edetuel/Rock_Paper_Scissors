@@ -11,43 +11,68 @@ function getHumanChoice() {
 
     return choice.toUpperCase();
 }
-
-let humanScore = 0;
 let computerScore = 0;
+let humanScore = 0;
+
 
 //logic to determine if human choice wins or computers choice
 let  playRound = function(humanChoice, computerChoice) {
+
      if (humanChoice === computerChoice) {
         //tie condition
-        alert(`It's a ties. You both picked ${humanChoice}`);
-     } else if (humanChoice === "rock" && computerChoice === "scissors" || computerChoice === "scissors" && humanChoice === "rock") {
-        alert("You win! Rock beats Scissors.");
-     } else if (humanChoice === "paper" && computerChoice === "rock" || computerChoice === "rock" && humanChoice === "paper") {
-        alert("You win! Paper beats Rock.");
-     } else if (humanChoice === "scissors" && computerChoice === "paper" || computerChoice === "paper" && humanChoice === "scissors") {
-        alert("You win! Scissor beats Paper");
+        console.log(`It's a ties. You both picked ${humanChoice}`);
+     } else if ((humanChoice === "rock") && (computerChoice === "scissors")) {
+        console.log("You win! Rock beats Scissors.");
+        humanScore++ ;
+    } else if ((humanChoice === "paper") && (computerChoice === "rock" )) {
+        console.log("You win! Paper beats Rock.");
+        humanScore++;
+     } else if ((humanChoice === "scissors" )&& (computerChoice === "paper")) { 
+        console.log("You win! Scissor beats Paper");
+        humanScore++;
      } else {
         //computer's win in this case
-        alert(`You Lose! ${computerChoice} beats ${humanChoice}`)
+        console.log(`You Lose! ${computerChoice} beats ${humanChoice}`);
+        computerScore++;
      }
 
+     console.log(`Player's choice: ${humanChoice}`);
+     console.log(`computer's choice: ${computerChoice}`);
 }
 
 const humanSelection = getHumanChoice();
 const computerSelection = getComputerChoice();
 
-playRound(humanSelection, computerSelection);
+// playRound(humanSelection, computerSelection);
+
+
+function scores() {
+     if (humanScore > computerScore) {
+        console.log(`Your score: ${humanScore} | Computer score ${computerScore}`);
+    } else if (computerScore > humanScore) {
+        console.log(`Your score: ${humanScore} | Computer score ${computerScore}`);
+    } else {
+        console.log("It's a tie");
+    }
+} 
+
+
 
 function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
-    let round = 1;
+    console.log(`Rock, Paper, Scissors.
 
-    for (let i = 1; i <= round; i++) {
-        if (round <= 5){
-            alert("This is the last round");
-            break;
-        }
-    }  
-        
- }
+This game is played for over 5 Rounds. Ties do not count.
+    `);
+    let i = 1;
+    let roundCount = 5;
+
+    while (i <= roundCount) {
+        console.log("Round " + i);
+
+        playRound(humanSelection, computerSelection);
+        i++;
+    }
+}
+       
+playGame();
+console.log(scores());
