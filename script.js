@@ -1,94 +1,115 @@
+let computerScore = 0;
+let humanScore = 0;
+let roundCount = 0;
+let maxRounds = 6;
+
 //get computer's random choice
 function getComputerChoice() {
-    const choice = ["ROCK", "PAPER", "SCISSORS"];
+    const choice = ["rock", "paper", "scissors"];
 
     return choice[Math.floor(Math.random() * choice.length)];
 }
 
 //get human's choice
-function getHumanChoice() {
+function getHumanChoice(choice) {
 
-    return btn1, btn2, btn3
+    return choice;
 }
-let computerScore = 0;
-let humanScore = 0;
+
 
 const outputContainer = document.querySelector("#outputContainer");
+const human = document.querySelector("#human");
+const comp = document.querySelector("#comp");
 
 //logic to determine if human choice wins or computers choice
-let  playRound = function(humanChoice, computerChoice) {
+let  playGame = function(humanChoice, computerChoice) {
+    let result = "";
 
      if (humanChoice === computerChoice) {
         //tie condition
-        outputContainer.textContent = `It's a ties. You both picked ${humanChoice}`;
-     } else if ((humanChoice === "rock") && (computerChoice === "scissors")) {
-        outputContainer.textContent = "You win! Rock beats Scissors.";
+        result = `It's a ties. You both picked ${humanChoice}`;
+     } else if (
+        (humanChoice === "rock") && (computerChoice === "scissors") || (humanChoice === "paper") && (computerChoice === "rock" ) || 
+        (humanChoice === "scissors" )&& (computerChoice === "paper")
+    ) {
+        result = `You win! ${humanChoice} beats ${computerChoice}`;
         humanScore++ ;
-    } else if ((humanChoice === "paper") && (computerChoice === "rock" )) {
-        outputContainer.textContent = "You win! Paper beats Rock.";
-        humanScore++;
-     } else if ((humanChoice === "scissors" )&& (computerChoice === "paper")) { 
-        outputContainer.textContent = "You win! Scissor beats Paper";
-        humanScore++;
+        roundCount++;
+    
      } else {
         //computer's win in this case
-        outputContainer.textContent = `You Lose! ${computerChoice} beats ${humanChoice}`;
+        result = `You Lose! ${computerChoice} beats ${humanChoice}`;
         computerScore++;
+        roundCount++;
      }
 
-     outputContainer.textContent = `Player's choice: ${humanChoice}`;
-     outputContainer.textContent = `computer's choice: ${computerChoice}`;
-}
-playRound();
+     outputContainer.textContent = result;
+
+
+     human.textContent = `Player's choice: ${humanChoice}`;
+     comp.textContent = `computer's choice: ${computerChoice}`;
+
+     updateScoreLine();
+
+     if (roundCount >= maxRounds) {
+        endGame(); 
+    }
+    
+ }
+
 
 
 const btn1 = document.querySelector("#btn1");
 const btn2 = document.querySelector("#btn2");
 const btn3 = document.querySelector("#btn3");
 
-btn1.addEventListener("click", playRound);
-btn2.addEventListener("click", playRound);
-btn3.addEventListener("click", playRound);
+btn1.addEventListener("click", () => playGame("rock", getComputerChoice()));
+btn2.addEventListener("click", () => playGame("paper", getComputerChoice()));
+btn3.addEventListener("click", () => playGame("scissors", getComputerChoice()));
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+
 
 // playRound(humanSelection, computerSelection);
 
+const text = document.querySelector("#text");
+const round = document.querySelector("#round");
+const message = document.querySelector("#msg")
 
-function scores() {
+
+function updateScoreLine() {
      if (humanScore > computerScore) {
-        outputContainer.textContent = `Your score: ${humanScore} | Computer score ${computerScore}`;
-    } else if (computerScore > humanScore) {
-        outputContainer.textContent = `Your score: ${humanScore} | Computer score ${computerScore}`;
-    } else {
-        outputContainer.textContent = "It's a tie!";
+        outputContainer.textContent = `Your score: ${humanScore} | Computer score ${computerScore}`; 
+
+        round.textContent = `Rounds: ${roundCount} /${maxRounds}`;
+    
     }
+    
 } 
 
 
 
+text.textContent = "This game is played for over 6 Rounds. Ties do not count.";
 
-function playGame() {
-    text.textContent = 
-"This game is played for over 5 Rounds. Ties do not count."
-    ;
-    let i = 1;
-    let roundCount = 5;
 
-    while (i <= roundCount) {
-        console.log ("Round"  + i);
-        
-
-        playRound(computerSelection, humanSelection);
-        i++;
-    
+//  handling the end of the game.
+function endGame() {
+    finalMessage = "";
+    if (humanScore > computerScore) {
+        finalMessage = "🎉🎉 You win the game!";
+    } else if (computerScore > humanScore) {
+        finalMessage = "🖥️ Computer win the game.";
+    } else {
+        finalMessage = "🤝It's a draw.";
     }
+
+    message.textContent = finalMessage;
+    // disable the buttons after game ends
+    btn1.disabled = true;
+    btn2.disabled = true;
+    btn3.disabled = true;
+
 }
    
-const text = document.querySelector("#text");
-const round = document.querySelector("#round");
 
 
-playGame(playRound);
-console.log(scores());
+// console.log = (scores());
