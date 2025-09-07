@@ -30,7 +30,7 @@ let  playGame = function(humanChoice, computerChoice) {
         result = `It's a ties. You both picked ${humanChoice}`;
      } else if (
         (humanChoice === "rock") && (computerChoice === "scissors") || (humanChoice === "paper") && (computerChoice === "rock" ) || 
-        (humanChoice === "scissors" )&& (computerChoice === "paper")
+        (humanChoice === "scissors" ) && (computerChoice === "paper")
     ) {
         result = `You win! ${humanChoice} beats ${computerChoice}`;
         humanScore++ ;
@@ -49,12 +49,11 @@ let  playGame = function(humanChoice, computerChoice) {
      human.textContent = `Player's choice: ${humanChoice}`;
      comp.textContent = `computer's choice: ${computerChoice}`;
 
-     updateScoreLine();
 
      if (roundCount >= maxRounds) {
         endGame(); 
     }
-    
+    updateScoreLine();
  }
 
 
@@ -69,19 +68,22 @@ btn3.addEventListener("click", () => playGame("scissors", getComputerChoice()));
 
 
 
-// playRound(humanSelection, computerSelection);
-
 const text = document.querySelector("#text");
 const round = document.querySelector("#round");
 const message = document.querySelector("#msg")
+const scoresUpdate = document.querySelector("#scoreUp")
 
 
 function updateScoreLine() {
      if (humanScore > computerScore) {
-        outputContainer.textContent = `Your score: ${humanScore} | Computer score ${computerScore}`; 
+        scoresUpdate.textContent = `Your score: ${humanScore} | Computer score: ${computerScore}`; 
 
-        round.textContent = `Rounds: ${roundCount} /${maxRounds}`;
-    
+        round.textContent = `Rounds: ${roundCount} / ${maxRounds}`;
+    }else if(computerScore > humanScore) {
+        scoresUpdate.textContent = `Your score: ${humanScore} | Computer score: ${computerScore} `
+        round.textContent = `Rounds: ${roundCount} / ${maxRounds}`;
+    }else{
+        round.textContent = "It seems to be a tie."
     }
     
 } 
@@ -112,4 +114,4 @@ function endGame() {
    
 
 
-// console.log = (scores());
+
